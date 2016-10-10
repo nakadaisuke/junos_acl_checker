@@ -153,18 +153,24 @@ def sort_port(csv_data):
 
     sorted_port_unit = sorted(port_unit, key=lambda x : (x['source-port'], x['destination-port']))
     sorted_source_range = sorted(source_range, key=lambda x: (port_range_calc(x['soruce-port'])))
-    sorted_dest_range = sorted(dest_range, key=lambda x: (port_range_calc(x['destination-port'])))
-    sorted_src_dest_port_range = sorted(dest_range, key=lambda x: (port_range_calc(x['destination-port'])))
+    sorted_dest_range = sorted(dest_range, key=lambda x: (port_range_calc(x['destination-port']),
+                                                          port_range_tie(x['destination-port'])))
+    sorted_source_range = sorted(source_range, key=lambda x: (port_range_calc(x['source-port']),
+                                                              port_range_tie(x['source-port'])))
     for i in sorted_dest_range:
         print(i)
-
 
 def port_range_calc(port_range):
     port_list = port_range.split('-')
     port_num = int(port_list[1].rstrip(' ')) - int(port_list[0].rstrip(' '))
     return port_num
 
-csv_data = open_csv('/Users/DN/PycharmProjects/junos_acl_checker/sample.csv')
+def port_range_tie(port_range):
+    port_list = port_range.split('-')
+    port_num = int(port_list[0].rstrip(' '))
+    return port_num
+
+csv_data = open_csv('sample.csv')
 #check_prefix_csv(csv_data)
 #check_port_csv(csv_data)
 csv_data = sort_port(csv_data)
