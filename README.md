@@ -6,3 +6,6 @@ Hence, operater must consider prefer prefix into appropriate term.
 
 This program evaluates prefix, protocol, port and reorder them instead of operator.
 Also, if prefix and port are not valid, this program return which line is not valid.
+
+Requirements:
+python3
